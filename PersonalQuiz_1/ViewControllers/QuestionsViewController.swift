@@ -43,7 +43,9 @@ class QuestionsViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        guard segue.identifier == "showResult" else { return }
+        let resultVC = segue.destination as! ResultViewController
+        resultVC.responses = answersChosen
     }
     
     
@@ -83,7 +85,7 @@ extension QuestionsViewController {
         questionProgressView.setProgress(totalProgress, animated: true)
         
         title = "Вопрос № \(questionIndex + 1) из \(questions.count)"
-    
+        
         showCurrentAnswers(for: currentQuestion.responseType)
     }
     
@@ -128,4 +130,8 @@ extension QuestionsViewController {
         
         performSegue(withIdentifier: "showResult", sender: nil)
     }
+    
+    
+
+    
 }

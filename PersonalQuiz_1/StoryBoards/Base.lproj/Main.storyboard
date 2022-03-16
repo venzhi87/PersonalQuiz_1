@@ -336,6 +336,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="resultAnswerLabel" destination="Y2C-PW-61v" id="Apv-za-LQk"/>
+                        <outlet property="resultDefinitionLabel" destination="tTx-dB-uTU" id="jUN-Yw-Tun"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AXR-Gk-G2W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="sK4-BB-H0l" userLabel="Exit" sceneMemberID="exit"/>
