@@ -11,15 +11,10 @@ import UIKit
 
 class ResultViewController: UIViewController {
     
-    // 1. Передать массив с ответами на экран с результатами
-    // 2. Определить наиболее часто встречающийся тип животного
-    // 3. Отобразить результаты в соответствии с этим животным
-    // 4. Избавиться от кнопки возврата назад на экране результатов
+    @IBOutlet var resultTypeLabel: UILabel!
+    @IBOutlet var descriptionLabel: UILabel!
     
-    @IBOutlet var resultAnswerLabel: UILabel!
-    @IBOutlet var resultDefinitionLabel: UILabel!
-    
-    var responses: [Answer]!
+    var answers: [Answer]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,21 +23,29 @@ class ResultViewController: UIViewController {
     }
     
     private func updateResult() {
-        var countOfAnimals: [Animal: Int] = [:]
-        let animals = responses.map { $0.animal}
-        
+        var frequencyOfAnimals: [Animal: Int] = [:]
+//        var animals: [Animal] = []
+//        for answer in answers {
+//            animals.append(answer.animal)
+//        }
+        let animals = answers.map { $0.animal}
         
         for animal in animals {
-            countOfAnimals[animal] = (countOfAnimals[animal] ?? 0) + 1
+            if let animalTypeCount = frequencyOfAnimals[animal] {
+                frequencyOfAnimals.updateValue(animalTypeCount + 1, forKey: animal)
+            } else {
+                frequencyOfAnimals[animal] = 1
+            }
         }
-        let sortedCountOfAnimals = countOfAnimals.sorted { $0.value > $1.value }
-        guard let mostCountAnimal = sortedCountOfAnimals.first?.key else { return }
+        let sortedFrequencyOfAnimals = frequencyOfAnimals.sorted { $0.value > $1.value }
+        guard let mostFrequencyAnimal = sortedFrequencyOfAnimals.first?.key else { return }
         
+        updateUI(with: mostFrequencyAnimal)
     }
     
-    private func updateUI(with animal: Animal) {
-        resultAnswerLabel.text = "Ты - \(animal.rawValue)"
-        resultDefinitionLabel.text = "\(animal.definition)"
+    private func updateUI(with animal: Animal?) {
+        resultTypeLabel.text = "Ты - \(animal?.rawValue ?? "🐶")!"
+        descriptionLabel.text = animal?.definition ?? ""
     }
     
 }
